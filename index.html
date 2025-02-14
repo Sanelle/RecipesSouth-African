@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flavors of South Africa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.83/dist/shoelace/shoelace.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-content">
+            <div class="branding">
+                <img src="logo.svg" alt="South African Cuisine" class="logo animate__animated animate__fadeInDown">
+                <h1 class="app-title">🇿🇦 Flavors of South Africa</h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#search" class="nav-link active"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#recipe-form" class="nav-link"><i class="fas fa-utensils"></i> Submit Recipe</a></li>
+                    <li><a href="#profile" class="nav-link"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><button id="theme-toggle" class="nav-link"><i class="fas fa-moon"></i> Theme</button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Auth Section -->
+        <section id="auth-section" class="auth-card hidden">
+            <div class="card-content">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login">Sign In</button>
+                    <button class="auth-tab" data-tab="register">Register</button>
+                </div>
+                
+                <!-- Login Form -->
+                <form id="login-form" class="auth-form active">
+                    <sl-input label="Username" type="text" required>
+                        <i class="fas fa-user" slot="prefix"></i>
+                    </sl-input>
+                    <sl-input label="Password" type="password" required toggle-password>
+                        <i class="fas fa-lock" slot="prefix"></i>
+                    </sl-input>
+                    <sl-button type="submit" variant="primary" class="btn-block">
+                        Sign In <i class="fas fa-arrow-right"></i>
+                    </sl-button>
+                </form>
+
+                <!-- Registration Form -->
+                <form id="register-form" class="auth-form">
+                    <sl-input label="Full Name" type="text" required>
+                        <i class="fas fa-id-card" slot="prefix"></i>
+                    </sl-input>
+                    <sl-input label="Email" type="email" required>
+                        <i class="fas fa-envelope" slot="prefix"></i>
+                    </sl-input>
+                    <sl-input label="Password" type="password" required toggle-password>
+                        <i class="fas fa-lock" slot="prefix"></i>
+                    </sl-input>
+                    <sl-button type="submit" variant="success" class="btn-block">
+                        Create Account <i class="fas fa-user-plus"></i>
+                    </sl-button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Recipe Submission -->
+        <section id="recipe-form" class="submit-card hidden">
+            <div class="card-header">
+                <h2>Share Your Recipe 🍴</h2>
+                <sl-button variant="text" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </sl-button>
+            </div>
+            <form id="submit-recipe" class="recipe-form">
+                <div class="form-grid">
+                    <sl-input label="Dish Name" required>
+                        <i class="fas fa-utensils" slot="prefix"></i>
+                    </sl-input>
+
+                    <sl-select label="Difficulty" required>
+                        <i class="fas fa-chart-line" slot="prefix"></i>
+                        <sl-option value="easy">Beginner Friendly</sl-option>
+                        <sl-option value="medium">Intermediate</sl-option>
+                        <sl-option value="hard">Master Chef</sl-option>
+                    </sl-select>
+
+                    <sl-input label="Cooking Time" type="time" required>
+                        <i class="fas fa-clock" slot="prefix"></i>
+                    </sl-input>
+
+                    <sl-textarea label="Ingredients" required rows="3" 
+                               placeholder="Separate ingredients with commas">
+                        <i class="fas fa-carrot" slot="prefix"></i>
+                    </sl-textarea>
+
+                    <sl-textarea label="Preparation Steps" required rows="5"
+                               placeholder="Write each step on a new line">
+                        <i class="fas fa-list-ol" slot="prefix"></i>
+                    </sl-textarea>
+
+                    <sl-file-upload label="Recipe Photo" accept="image/*" multiple>
+                        <i class="fas fa-camera" slot="prefix"></i>
+                    </sl-file-upload>
+                </div>
+                <sl-button type="submit" variant="primary" class="btn-block">
+                    Publish Recipe <i class="fas fa-share"></i>
+                </sl-button>
+            </form>
+        </section>
+
+        <!-- Recipe Explorer -->
+        <section id="search" class="search-section">
+            <div class="search-card">
+                <div class="search-header">
+                    <sl-input placeholder="Search recipes..." pill>
+                        <i class="fas fa-search" slot="prefix"></i>
+                    </sl-input>
+                    <sl-dropdown>
+                        <sl-button slot="trigger" variant="default" pill>
+                            <i class="fas fa-filter"></i> Filters
+                        </sl-button>
+                        <sl-menu>
+                            <sl-menu-label>Difficulty</sl-menu-label>
+                            <sl-menu-item value="easy">Beginner</sl-menu-item>
+                            <sl-menu-item value="medium">Intermediate</sl-menu-item>
+                            <sl-menu-item value="hard">Advanced</sl-menu-item>
+                        </sl-menu>
+                    </sl-dropdown>
+                </div>
+                
+                <div id="recipe-list" class="recipe-grid">
+                    <!-- Dynamic recipe cards will be inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- User Profile -->
+        <section id="profile" class="profile-card hidden">
+            <div class="profile-header">
+                <sl-avatar image="user.jpg" shape="circle" class="profile-photo"></sl-avatar>
+                <div class="profile-info">
+                    <h2>Welcome, <span id="profile-username">Guest</span>!</h2>
+                    <sl-rating label="Chef Rating" value="4" readonly></sl-rating>
+                </div>
+            </div>
+            
+            <div class="profile-stats">
+                <sl-card class="stat-card">
+                    <i class="fas fa-utensils"></i>
+                    <h3>Recipes Shared</h3>
+                    <span class="stat-value">24</span>
+                </sl-card>
+                
+                <sl-card class="stat-card">
+                    <i class="fas fa-heart"></i>
+                    <h3>Favorites</h3>
+                    <span class="stat-value">189</span>
+                </sl-card>
+            </div>
+            
+            <sl-button variant="danger" class="btn-block" id="logout">
+                <i class="fas fa-sign-out-alt"></i> Sign Out
+            </sl-button>
+        </section>
+
+        <!-- Recipe Detail Modal -->
+        <sl-dialog id="recipe-modal" label="Recipe Details" class="recipe-modal">
+            <div id="modal-content"></div>
+            <div slot="footer">
+                <sl-button variant="primary" class="print-btn">
+                    <i class="fas fa-print"></i> Print
+                </sl-button>
+                <sl-dropdown>
+                    <sl-button variant="success" slot="trigger">
+                        <i class="fas fa-share"></i> Share
+                    </sl-button>
+                    <sl-menu>
+                        <sl-menu-item value="facebook">
+                            <i class="fab fa-facebook"></i> Facebook
+                        </sl-menu-item>
+                        <sl-menu-item value="twitter">
+                            <i class="fab fa-twitter"></i> Twitter
+                        </sl-menu-item>
+                        <sl-menu-item value="whatsapp">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </sl-menu-item>
+                    </sl-menu>
+                </sl-dropdown>
+            </div>
+        </sl-dialog>
+    </main>
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.83/dist/shoelace/shoelace.esm.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>
